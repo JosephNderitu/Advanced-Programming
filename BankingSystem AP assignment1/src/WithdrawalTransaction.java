@@ -1,5 +1,6 @@
 public class WithdrawalTransaction extends BaseTransaction {
     private double unprocessedAmount = 0;
+    private boolean reversed = false; // Prevent multiple reversals
 
     public WithdrawalTransaction(double amount) {
         super(amount);
@@ -32,8 +33,17 @@ public class WithdrawalTransaction extends BaseTransaction {
         }
     }
 
+    
     public boolean reverse() {
-        // Implementation for reversing withdrawal
+        if (reversed) {
+            System.out.println("Transaction has already been reversed.");
+            return false;
+        }
+        // Undo the withdrawal
+        BankAccount account = BankAccountManager.getAccountInstance(); // Placeholder for retrieving account
+        account.setBalance(account.getBalance() + amount); // Add amount back to the balance
+        System.out.println("Reversal of withdrawal: " + amount + " has been completed.");
+        reversed = true; // Mark as reversed
         return true;
     }
 }
