@@ -1,4 +1,21 @@
+/**
+ * Main class to test the functionality of the banking system.
+ * 
+ * This class demonstrates the creation of a bank account, deposit and withdrawal
+ * transactions, partial withdrawals, reversals, and type casting of transactions.
+ * 
+ * Author: Gikuru Joseph Nderitu  
+ * Registration Number: SCT212-0574/2022  
+ * 
+ * @since 1.0.0
+ */
 public class Main {
+    /**
+     * Main method to execute and test banking system operations.
+     * 
+     * @param args command-line arguments (not used in this application).
+     * @throws InsufficientFundsException if there are insufficient funds during a withdrawal transaction.
+     */
     public static void main(String[] args) throws InsufficientFundsException {
         // Create a bank account and register it
         BankAccount account = new BankAccount(1000);
