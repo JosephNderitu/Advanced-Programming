@@ -1,11 +1,28 @@
+/**
+ * Represents a withdrawal transaction on a bank account.
+ * This class supports both full and partial withdrawals and allows reversing a transaction.
+ * 
+ * @since 1.0.0
+ */
 public class WithdrawalTransaction extends BaseTransaction {
-    private double unprocessedAmount = 0;
-    private boolean reversed = false; // Prevent multiple reversals
+    private double unprocessedAmount = 0; // Amount that couldn't be processed during partial withdrawal
+    private boolean reversed = false; // Prevents multiple reversals of the same transaction
 
+    /**
+     * Constructs a new WithdrawalTransaction with the specified amount.
+     * 
+     * @param amount the amount to withdraw; must be positive.
+     */
     public WithdrawalTransaction(double amount) {
         super(amount);
     }
 
+    /**
+     * Applies the withdrawal to the given bank account.
+     * 
+     * @param ba the bank account from which the funds will be withdrawn.
+     * @throws InsufficientFundsException if the account's balance is less than the withdrawal amount.
+     */
     @Override
     public void apply(BankAccount ba) throws InsufficientFundsException {
         if (ba.getBalance() < amount) {
@@ -15,6 +32,13 @@ public class WithdrawalTransaction extends BaseTransaction {
         System.out.println("Withdrawal of " + amount + " processed successfully");
     }
 
+    /**
+     * Applies the withdrawal with an option to withdraw only the available funds.
+     * 
+     * @param ba the bank account from which the funds will be withdrawn.
+     * @param withdrawAvailable if true, withdraws only the available balance in the account.
+     *                          If false, attempts to withdraw the full amount.
+     */
     public void apply(BankAccount ba, boolean withdrawAvailable) {
         try {
             double balance = ba.getBalance();
@@ -33,7 +57,11 @@ public class WithdrawalTransaction extends BaseTransaction {
         }
     }
 
-    
+    /**
+     * Reverses the withdrawal transaction, adding the withdrawn amount back to the account.
+     * 
+     * @return true if the reversal was successful, false if the transaction was already reversed.
+     */
     public boolean reverse() {
         if (reversed) {
             System.out.println("Transaction has already been reversed.");
